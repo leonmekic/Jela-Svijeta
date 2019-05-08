@@ -16,16 +16,16 @@ class Meal extends Model
 
     public function ingredient()
     {
-        return $this->hasMany('App\Models\Ingredient');
+        return $this->belongsToMany('App\Models\Ingredient');
     }
 
     public function tag()
     {
-        return $this->hasMany('App\Models\Tags');
+        return $this->belongsToMany('App\Models\Tag');
     }
 
     public function category()
     {
-        return $this->hasMany('App\Models\Category');
+        return $this->belongsToMany('App\Models\Category');
     }
 }

@@ -17,6 +17,9 @@ class CreateIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->timestamps();
+            $table->unsignedBigInteger('meal_id')->nullable();
+
+            $table->foreign('meal_id')->references('id')->on('meals');
         });
     }
 

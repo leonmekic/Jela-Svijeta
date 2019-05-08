@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TagsTranslation extends Model
+class TagTranslation extends Model
 {
     public $timestamps = false;
     protected $fillable = ['title'];

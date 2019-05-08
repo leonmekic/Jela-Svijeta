@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CategoryMealTableSeeder extends Seeder
+class MealTagTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class CategoryMealTableSeeder extends Seeder
         foreach (range(1,10) as $index) {
             static $order = 1;
             static $descOrder = 10;
-            DB::table('category_meal')->insert([
-                'category_id' => $order++,
+            DB::table('meal_tag')->insert([
+                'tag_id' => $order++,
                 'meal_id' => $descOrder--,
             ]);
         }

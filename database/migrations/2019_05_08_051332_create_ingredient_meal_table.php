@@ -14,9 +14,8 @@ class CreateIngredientMealTable extends Migration
     public function up()
     {
         Schema::create('ingredient_meal', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('ingredient_id')->references('id')->on('ingredients');
-            $table->string('meal_id')->references('id')->on('meals');
+            $table->integer('ingredient_id');
+            $table->integer('meal_id');
             $table->timestamps();
         });
     }

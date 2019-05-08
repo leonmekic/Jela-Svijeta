@@ -15,7 +15,7 @@ class MealTableSeeder extends Seeder
         $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
         foreach (range(1,10) as $index) {
             DB::table('meals')->insert([
-                'title' => $faker->foodName
+                'title' => $faker->foodName,
             ]);
         }
     }

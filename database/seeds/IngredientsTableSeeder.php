@@ -14,8 +14,10 @@ class IngredientsTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
         foreach (range(1,10) as $index) {
+            static $order = 1;
             DB::table('ingredients')->insert([
-                'title' => $faker->meatName
+                'title' => $faker->dairyName,
+                'meal_id' => $order++,
             ]);
         }
     }

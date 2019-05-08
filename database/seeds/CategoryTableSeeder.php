@@ -14,8 +14,10 @@ class CategoryTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
         foreach (range(1,10) as $index) {
-            DB::table('category')->insert([
-                'title' => $faker->fruitName
+            static $order = 1;
+            DB::table('categories')->insert([
+                'title' => $faker->fruitName,
+                'meal_id' => $order++,
             ]);
         }
     }

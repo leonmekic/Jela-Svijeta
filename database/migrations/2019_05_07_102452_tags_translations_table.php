@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoryTable extends Migration
+class TagsTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('tag_translations', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->unsignedBigInteger('tag_id')->nullable();
             $table->string('title');
-            $table->timestamps();
-            $table->unsignedBigInteger('meal_id')->nullable();
+            $table->string('locale')->index();
 
-            $table->foreign('meal_id')->references('id')->on('meals');
+            $table->unique(['tag_id','locale']);
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
@@ -30,6 +32,6 @@ class CreateCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category');
+        //
     }
 }

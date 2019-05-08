@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class IngredientMealTableSeeder extends Seeder
 {
@@ -12,17 +11,13 @@ class IngredientMealTableSeeder extends Seeder
      */
     public function run()
     {
-        $ingredientIds = DB::table('ingredients')->where('id' ,'>' ,0)->pluck('id')->toArray();
-        $mealIds = DB::table('meals')->where('id' ,'>' ,0)->pluck('id')->toArray();
-
-        foreach ((range(1, 10)) as $index)
-        {
-            DB::table('ingredient_meal')->insert(
-                [
-                    'ingredient_id' => $ingredientIds[array_rand($ingredientIds)],
-                    'meal_id' => $mealIds[array_rand($mealIds)]
-                ]
-            );
+        foreach (range(1,10) as $index) {
+            static $order = 1;
+            static $descOrder = 10;
+            DB::table('ingredient_meal')->insert([
+                'ingredient_id' => $order++,
+                'meal_id' => $descOrder--,
+            ]);
         }
     }
 }
