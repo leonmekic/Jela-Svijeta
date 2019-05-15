@@ -13,16 +13,18 @@ class IngredientTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingredient_translations', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->unsignedBigInteger('ingredient_id')->nullable();
-            $table->string('title');
-            $table->string('locale')->index();
+        Schema::create(
+            'ingredient_translations',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedBigInteger('ingredient_id')->nullable();
+                $table->string('title');
+                $table->string('locale')->index();
 
-            $table->unique(['ingredient_id','locale']);
-            $table->foreign('ingredient_id')->references('id')->on('ingredients');
-        });
+                $table->unique(['ingredient_id', 'locale']);
+                $table->foreign('ingredient_id')->references('id')->on('ingredients');
+            }
+        );
     }
 
     /**

@@ -13,16 +13,18 @@ class TagsTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tag_translations', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->unsignedBigInteger('tag_id')->nullable();
-            $table->string('title');
-            $table->string('locale')->index();
+        Schema::create(
+            'tag_translations',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedBigInteger('tag_id')->nullable();
+                $table->string('title');
+                $table->string('locale')->index();
 
-            $table->unique(['tag_id','locale']);
-            $table->foreign('tag_id')->references('id')->on('tags');
-        });
+                $table->unique(['tag_id', 'locale']);
+                $table->foreign('tag_id')->references('id')->on('tags');
+            }
+        );
     }
 
     /**

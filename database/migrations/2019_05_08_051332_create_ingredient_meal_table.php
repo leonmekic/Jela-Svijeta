@@ -13,11 +13,13 @@ class CreateIngredientMealTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingredient_meal', function (Blueprint $table) {
-            $table->integer('ingredient_id');
-            $table->integer('meal_id');
-            $table->timestamps();
-        });
+        Schema::create(
+            'ingredient_meal',
+            function (Blueprint $table) {
+                $table->integer('ingredient_id');
+                $table->integer('meal_id');
+            }
+        );
     }
 
     /**

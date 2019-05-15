@@ -13,16 +13,18 @@ class CategoryTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_translations', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('title');
-            $table->string('locale')->index();
+        Schema::create(
+            'category_translations',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedBigInteger('category_id')->nullable();
+                $table->string('title');
+                $table->string('locale')->index();
 
-            $table->unique(['category_id','locale']);
-            $table->foreign('category_id')->references('id')->on('categories');
-        });
+                $table->unique(['category_id', 'locale']);
+                $table->foreign('category_id')->references('id')->on('categories');
+            }
+        );
     }
 
     /**

@@ -13,12 +13,16 @@ class CreateMealsTable extends Migration
      */
     public function up()
     {
-        Schema::create('meals', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        Schema::create(
+            'meals',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('title');
+                $table->integer('category_id')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
     }
 
     /**

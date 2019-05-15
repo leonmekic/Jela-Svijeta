@@ -13,14 +13,15 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title');
-            $table->timestamps();
-            $table->unsignedBigInteger('meal_id')->nullable();
-
-            $table->foreign('meal_id')->references('id')->on('meals');
-        });
+        Schema::create(
+            'tags',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('title');
+                $table->string('slug');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

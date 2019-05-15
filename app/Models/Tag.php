@@ -9,6 +9,7 @@ class Tag extends Model
     use \Dimsav\Translatable\Translatable;
 
     public $translatedAttributes = ['title'];
+
     protected $fillable = ['code'];
 
     public function meal()

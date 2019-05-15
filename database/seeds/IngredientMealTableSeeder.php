@@ -11,13 +11,14 @@ class IngredientMealTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (range(1,10) as $index) {
-            static $order = 1;
-            static $descOrder = 10;
-            DB::table('ingredient_meal')->insert([
-                'ingredient_id' => $order++,
-                'meal_id' => $descOrder--,
-            ]);
+        $ID = \App\Models\Ingredient::all()->pluck('id')->toArray();
+        foreach (\App\Models\Meal::all()->pluck('id') as $id) {
+            DB::table('ingredient_meal')->insert(
+                [
+                    'ingredient_id' => $ID[array_rand($ID)],
+                    'meal_id'       => $id,
+                ]
+            );
         }
     }
 }

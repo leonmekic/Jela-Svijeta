@@ -13,11 +13,13 @@ class CreateMealTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('meal_tag', function (Blueprint $table) {
-            $table->integer('tag_id');
-            $table->integer('meal_id');
-            $table->timestamps();
-        });
+        Schema::create(
+            'meal_tag',
+            function (Blueprint $table) {
+                $table->integer('tag_id');
+                $table->integer('meal_id');
+            }
+        );
     }
 
     /**

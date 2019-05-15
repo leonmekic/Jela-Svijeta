@@ -13,6 +13,6 @@ class Category extends Model
 
     public function meal()
     {
-        return $this->belongsToMany('App\Models\Meal', 'category_meal');
+        return $this->belongsTo('App\Models\Meal');
     }
 }

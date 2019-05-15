@@ -11,13 +11,14 @@ class MealTagTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (range(1,10) as $index) {
-            static $order = 1;
-            static $descOrder = 10;
-            DB::table('meal_tag')->insert([
-                'tag_id' => $order++,
-                'meal_id' => $descOrder--,
-            ]);
+        $ID = \App\Models\Tag::all()->pluck('id')->toArray();
+        foreach (\App\Models\Meal::all()->pluck('id') as $id) {
+            DB::table('meal_tag')->insert(
+                [
+                    'tag_id'  => $ID[array_rand($ID)],
+                    'meal_id' => $id,
+                ]
+            );
         }
     }
 }

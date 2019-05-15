@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MealsTranslationTable extends Migration
+class CreateDescriptionTranslationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +14,15 @@ class MealsTranslationTable extends Migration
     public function up()
     {
         Schema::create(
-            'meal_translations',
+            'description_translations',
             function (Blueprint $table) {
-                $table->increments('id');
-                $table->unsignedBigInteger('meal_id')->nullable();
-                $table->string('title');
+                $table->bigIncrements('id');
+                $table->text('description');
+                $table->unsignedBigInteger('description_id');
                 $table->string('locale')->index();
 
-                $table->unique(['meal_id', 'locale']);
-                $table->foreign('meal_id')->references('id')->on('meals');
+                $table->unique(['description_id', 'locale']);
+                $table->foreign('description_id')->references('id')->on('descriptions');
             }
         );
     }
@@ -34,6 +34,6 @@ class MealsTranslationTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('description_translation');
     }
 }

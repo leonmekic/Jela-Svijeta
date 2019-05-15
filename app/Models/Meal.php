@@ -14,6 +14,8 @@ class Meal extends Model
 
     protected $fillable = ['code'];
 
+    protected $table = 'meals';
+
     public function ingredient()
     {
         return $this->belongsToMany('App\Models\Ingredient');
@@ -26,6 +28,11 @@ class Meal extends Model
 
     public function category()
     {
-        return $this->belongsToMany('App\Models\Category');
+        return $this->hasOne('App\Models\Category', 'id', 'category_id');
+    }
+
+    public function description()
+    {
+        return $this->hasOne('App\Models\Description', 'id');
     }
 }

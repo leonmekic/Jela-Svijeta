@@ -9,14 +9,9 @@ class MealTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
-        foreach (range(1,10) as $index) {
-            DB::table('meals')->insert([
-                'title' => $faker->foodName,
-            ]);
-        }
+        factory(\App\Models\Meal::class, 20)->create();
     }
 }

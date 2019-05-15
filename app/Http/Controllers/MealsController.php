@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RequestValidation;
 use App\Http\Resources\Meals;
 use App\Models\Meal;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ValidateParameters;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class MealsController extends Controller
@@ -18,9 +15,9 @@ class MealsController extends Controller
             $request->all(),
             [
                 'language'  => 'required|max:2',
-                'per_page'  => 'nullable|integer',
+                'per_page'  => 'nullable|integer|min:1',
                 'page'      => 'nullable|integer|min:1',
-                'diff_time' => 'nullable|min:0'
+                'diff_time' => 'nullable|integer|min:0'
             ]
         );
 
@@ -29,32 +26,26 @@ class MealsController extends Controller
         }
 
         $meals = Meal::query();
-        $category = DB::table('category_meal');
-        $tag = DB::table('meal_tag');
 
-        $categoryId = $request->get('category_id');
-        $tagId = $request->get('tag_id');
+        $categoryId = $request->get('category');
+        $tagId = $request->get('tag');
+
         $perPage = (int)$request->get('per_page');
         $with = $request->get('with');
         $diffTime = $request->get('diff_time');
-
-        if ($categoryId == "null") {
-            $mealID = $category->whereNull('category_id')->pluck('meal_id');
-            $meals->whereIn('id', $mealID);
-
-        } elseif ($categoryId == "!null") {
-            $mealID = $category->whereNotNull('category_id')->pluck('meal_id');
-            $meals->whereIn('id', $mealID);
-
-        } elseif ($categoryId) {
-            $mealID = $category->where('category_id', $categoryId)->pluck('meal_id');
-            $meals->where('id', $mealID);
-        }
+        $date = date("Y-m-d H:i:s", $diffTime);
 
         if ($tagId) {
             $tags = explode(',', $tagId);
-            $mealID = $tag->whereIn('tag_id', $tags)->pluck('meal_id');
-            $meals->whereIn('id', $mealID);
+            $meals->whereHas(
+                'tag',
+                function ($query) use ($tags) {
+                    $query->whereIn('tag_id', $tags);
+
+                },
+                '>=',
+                count($tags)
+            );
         }
 
         if ($with) {
@@ -62,13 +53,29 @@ class MealsController extends Controller
             $meals->with($withName);
         }
 
-        if ($diffTime && $diffTime > 0) {
-            $meals->where('updated_at', '>', $diffTime);
+        if ($categoryId == "null") {
+            $meals->whereNull('category_id');
+
+        } elseif ($categoryId == "!null") {
+            $meals->whereNotNull('category_id');
+
+        } elseif ($categoryId) {
+            $meals->where('category_id', $categoryId);
+
         }
 
-        if ($perPage && $perPage > 0) {
+        if ($diffTime) {
+            $meals->where('updated_at', '>=', $date);
+
+            $meals->withTrashed();
+
+        }
+
+        if ($perPage) {
+
             return Meals::collection($meals->paginate($perPage)->withPath(url()->full()));
         } else {
+
             return Meals::collection($meals->get());
         }
     }
